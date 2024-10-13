@@ -1,4 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
+import { useDogsProvider } from '../providers/dogProvider';
+import { useSectionProvider } from '../providers/sectionProvider';
+import { ActiveTab } from '../types';
 
 export const Section = ({
   label,
@@ -8,41 +11,61 @@ export const Section = ({
   label: string;
   children: ReactNode;
 }) => {
+  const { activeSection, setActiveSection } = useSectionProvider();
+  const { dogList } = useDogsProvider();
+  const favoritedDogsCount = dogList.filter((dog) => dog.isFavorite).length;
+  const unfavoritedDogsCount = dogList.filter((dog) => !dog.isFavorite).length;
+
+  const handleSetActiveSection = (sectionName: ActiveTab) => {
+    const newActiveSection =
+      sectionName !== activeSection ? sectionName : 'all';
+    setActiveSection(newActiveSection);
+  };
+
   return (
-    <section id="main-section">
-      <div className="container-header">
-        <div className="container-label">{label}</div>
-        <div className="selectors">
+    <section id='main-section'>
+      <div className='container-header'>
+        <div className='container-label'>{label}</div>
+        <div className='selectors'>
           {/* This should display the favorited count */}
           <div
-            className={`selector ${"active"}`}
+            className={`selector ${
+              activeSection === 'favorited' ? 'active' : ''
+            }`}
             onClick={() => {
-              alert("click favorited");
+              // alert('click favorited');
+              handleSetActiveSection('favorited');
             }}
           >
-            favorited ( {0} )
+            favorited ( {favoritedDogsCount} )
           </div>
 
           {/* This should display the unfavorited count */}
           <div
-            className={`selector ${""}`}
+            className={`selector ${
+              activeSection === 'unfavorited' ? 'active' : ''
+            }`}
             onClick={() => {
-              alert("click unfavorited");
+              // alert('click unfavorited');
+              handleSetActiveSection('unfavorited');
             }}
           >
-            unfavorited ( {10} )
+            unfavorited ( {unfavoritedDogsCount} )
           </div>
           <div
-            className={`selector ${""}`}
+            className={`selector ${
+              activeSection === 'createDog' ? 'active' : ''
+            }`}
             onClick={() => {
-              alert("clicked create dog");
+              // alert('clicked create dog');
+              handleSetActiveSection('createDog');
             }}
           >
             create dog
           </div>
         </div>
       </div>
-      <div className="content-container">{children}</div>
+      <div className='content-container'>{children}</div>
     </section>
   );
 };
