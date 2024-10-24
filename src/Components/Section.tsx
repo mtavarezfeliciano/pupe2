@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { useDogsProvider } from '../providers/dogProvider';
 import { useSectionProvider } from '../providers/sectionProvider';
+import { useDogsProvider } from '../providers/dogProvider';
 import { ActiveTab } from '../types';
 
 export const Section = ({

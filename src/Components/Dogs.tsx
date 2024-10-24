@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDogsProvider } from '../providers/dogProvider';
 import { useSectionProvider } from '../providers/sectionProvider';
 import { Dog } from '../types';
